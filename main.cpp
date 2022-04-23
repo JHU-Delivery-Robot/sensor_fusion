@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include "pico/stdlib.h"
 #include "minmea.h"
 
@@ -50,11 +50,16 @@ int main() {
             case MINMEA_SENTENCE_GLL: {
                 struct minmea_sentence_gll frame;
                 if (minmea_parse_gll(&frame, line)) {
-                    printf("$GLL: (%d/%d,%d/%d) %d:%d:%d %c\n",
-                            frame.latitude.value, frame.latitude.scale,
-                            frame.longitude.value, frame.longitude.scale,
-                            frame.time.hours, frame.time.minutes, frame.time.seconds,
-                            frame.status);
+                    std::cout << "$GLL: (" << frame.latitude.value << "/" << frame.latitude.scale << ", "
+                                           << frame.longitude.value << "/" << frame.longitude.scale << ") "
+                                           << frame.time.hours << ":" << frame.time.minutes << ":" << frame.time.seconds
+                                           << frame.status << std::endl;
+                }
+            } break;
+            case MINMEA_SENTENCE_GSV: {
+                struct minmea_sentence_gsv frame;
+                if (minmea_parse_gsv(&frame, line)) {
+                    std::cout << "$GSV: sattelites in view: " << frame.total_sats << std::endl;
                 }
             } break;
         }

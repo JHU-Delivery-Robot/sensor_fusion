@@ -13,7 +13,7 @@ sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-n
 
 Then clone this repository with submodules:
 ```
-git clone --recurse-submodules https://github.com/JHU-Delivery-Robot/sensor-fusion
+git clone --recurse-submodules https://github.com/JHU-Delivery-Robot/sensor-fusion.git
 ```
 and from inside of `./sensor-fusion/pico-sdk` run `git submodule update --init`.
 
