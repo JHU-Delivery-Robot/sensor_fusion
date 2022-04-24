@@ -19,24 +19,24 @@ void Magnetometer::read (int16_t* outputs) {
 	std::uint8_t low = 0;
 	std::uint8_t high = 0;
 
-	i2c_write_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_X_L, 1, false, timeout);
-	i2c_read_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &low, 1, false, timeout);
-	i2c_write_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_X_H, 1, false, timeout);
-	i2c_read_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &high, 1, false, timeout);
+	i2c_write_blocking(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_X_L, 1, false);
+	i2c_read_blocking(i2c_default, MAG_DEVICE_ADDRESS, &low, 1, false);
+	i2c_write_blocking(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_X_H, 1, false);
+	i2c_read_blocking(i2c_default, MAG_DEVICE_ADDRESS, &high, 1, false);
 
 	int16_t x_current_reading = (high << 8) | low;
 
-	i2c_write_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_Y_L, 1, false, timeout);
-	i2c_read_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &low, 1, false, timeout);
-	i2c_write_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_Y_H, 1, false, timeout);
-	i2c_read_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &high, 1, false, timeout);
+	i2c_write_blocking(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_Y_L, 1, false);
+	i2c_read_blocking(i2c_default, MAG_DEVICE_ADDRESS, &low, 1, false);
+	i2c_write_blocking(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_Y_H, 1, false);
+	i2c_read_blocking(i2c_default, MAG_DEVICE_ADDRESS, &high, 1, false);
 
 	int16_t y_current_reading = (high << 8) | low;
 
-	i2c_write_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_Z_L, 1, false, timeout);
-	i2c_read_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &low, 1, false, timeout);
-	i2c_write_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_Z_H, 1, false, timeout);
-	i2c_read_timeout_us(i2c_default, MAG_DEVICE_ADDRESS, &high, 1, false, timeout);
+	i2c_write_blocking(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_Z_L, 1, false);
+	i2c_read_blocking(i2c_default, MAG_DEVICE_ADDRESS, &low, 1, false);
+	i2c_write_blocking(i2c_default, MAG_DEVICE_ADDRESS, &MAG_OUT_Z_H, 1, false);
+	i2c_read_blocking(i2c_default, MAG_DEVICE_ADDRESS, &high, 1, false);
 
 	int16_t z_current_reading = (high << 8) | low;
 
