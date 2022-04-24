@@ -5,7 +5,7 @@
 
 // These are registers for this sensor: https://www.st.com/resource/en/datasheet/lis3mdl.pdf#page=23
 
-constexpr std::uint8_t MAG_DEVICE_ADDRESS = 0b0011100;
+constexpr std::uint8_t MAG_DEVICE_ADDRESS = 0x1E;
 #define MAG_WHO_AM_I 0x0F
 #define MAG_CTRL_REG1 0x20
 #define MAG_CTRL_REG2 0x21

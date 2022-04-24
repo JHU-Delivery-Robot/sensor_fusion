@@ -20,7 +20,7 @@ public:
 
 	void read (int16_t* outputs);
 
-	void reset ();
+	void init ();
 
 	void print_test ();
 };
