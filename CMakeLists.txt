@@ -31,7 +31,7 @@ pico_enable_stdio_uart(gps 0)
 # create map/bin/hex file etc.
 pico_add_extra_outputs(gps)
 
-# IMU
+# Magnetometer
 add_executable(magnetometer
     magnetometer_main.cpp
     magnetometer.cpp
@@ -46,3 +46,19 @@ pico_enable_stdio_uart(magnetometer 0)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(magnetometer)
+
+# IMU
+add_executable(imu
+    imu_main.cpp
+    imu.cpp
+)
+
+# pull in common dependencies
+target_link_libraries(imu pico_stdlib hardware_i2c)
+
+# direct serial output to USB rather than UART
+pico_enable_stdio_usb(imu 1)
+pico_enable_stdio_uart(imu 0)
+
+# create map/bin/hex file etc.
+pico_add_extra_outputs(imu)

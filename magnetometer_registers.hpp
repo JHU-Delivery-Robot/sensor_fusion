@@ -1,5 +1,5 @@
-#ifndef MAGNETOMETER_REGISTERS_H_
-#define MAGNETOMETER_REGISTERS_H_
+#ifndef MAGNETOMETER_REGISTERS_HPP_
+#define MAGNETOMETER_REGISTERS_HPP_
 
 // Either "#define i2c i2c0" or "#define i2c i2c1"
 #include "hardware/i2c.h"

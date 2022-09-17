@@ -1,12 +1,12 @@
-#ifndef MAGNETOMETER_HPP_
-#define MAGNETOMETER_HPP_
+#ifndef IMU_HPP_
+#define IMU_HPP_
 
 #include "magnetometer_registers.hpp"
 #include <cstdint>
 
-class Magnetometer {
+class IMU {
 public:
-	Magnetometer();
+	IMU();
 	void read (int16_t* outputs);
 	void init ();
 };
