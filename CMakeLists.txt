@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 # initialize pico-sdk from submodule
 # MUST come before project()
 include(pico-sdk/pico_sdk_init.cmake)
-include_directories(includes)
+include_directories(includes minmea magnetometer accelerometer-gyroscope accelerometer-gyroscope/accelerometer accelerometer-gyroscope/gyroscope gps)
 
 project(sensor_reading
     VERSION 0.1.0
@@ -19,8 +19,8 @@ pico_sdk_init()
 # GPS test
 add_executable(gps
     gps_main.cpp
-    gps.cpp
-    minmea.c
+    gps/gps.cpp
+    minmea/minmea.c
 )
 
 # pull in common dependencies
@@ -36,7 +36,7 @@ pico_add_extra_outputs(gps)
 # Magnetometer
 add_executable(magnetometer
     magnetometer_main.cpp
-    magnetometer.cpp
+    magnetometer/magnetometer.cpp
 )
 
 # pull in common dependencies
@@ -52,7 +52,7 @@ pico_add_extra_outputs(magnetometer)
 # Accelerometer
 add_executable(accelerometer
     accelerometer_main.cpp
-    accelerometer.cpp
+    accelerometer-gyroscope/accelerometer/accelerometer.cpp
 )
 
 # pull in common dependencies
@@ -68,7 +68,7 @@ pico_add_extra_outputs(accelerometer)
 # Gyroscope
 add_executable(gyroscope
     gyroscope_main.cpp
-    gyroscope.cpp
+    accelerometer-gyroscope/gyroscope/gyroscope.cpp
 )
 
 # pull in common dependencies

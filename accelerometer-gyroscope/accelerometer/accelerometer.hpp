@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-#include "magnetometer_registers.hpp"
+#include "accelerometer_registers.hpp"
 #include "data_types.hpp"
 
 class Accelerometer {
