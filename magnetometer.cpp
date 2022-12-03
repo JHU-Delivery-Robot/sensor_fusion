@@ -34,7 +34,12 @@ void Magnetometer::init () {
 	// Write to register to pull out of sleep mode
 	std::uint8_t data[2];
 	data[0] = MAG_CTRL_REG3;
-	data[1] = 0x00;
+	// Highest two bits are each 0 by requirement
+	// LP (Low-Power Mode) is 0 by default
+	// Next two bits are each 0 by requirement
+	// SIM set to 0 for 4-wire SPI
+	// MD[1:0] set to 00 for continuous-conversion mode (this is what pulls the magnetometer out of sleep mode)
+	data[1] = 0b00000000;
 
 	i2c_write_blocking(i2c, MAG_DEVICE_ADDRESS, data, 2, true);
 }

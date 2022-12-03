@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.15)
 
 # initialize pico-sdk from submodule
 # MUST come before project()
 include(pico-sdk/pico_sdk_init.cmake)
+include_directories(includes)
 
 project(sensor_reading
     VERSION 0.1.0
@@ -17,7 +18,8 @@ pico_sdk_init()
 
 # GPS test
 add_executable(gps
-    main.cpp
+    gps_main.cpp
+    gps.cpp
     minmea.c
 )
 
@@ -47,18 +49,34 @@ pico_enable_stdio_uart(magnetometer 0)
 # create map/bin/hex file etc.
 pico_add_extra_outputs(magnetometer)
 
-# IMU
-add_executable(imu
-    imu_main.cpp
-    imu.cpp
+# Accelerometer
+add_executable(accelerometer
+    accelerometer_main.cpp
+    accelerometer.cpp
 )
 
 # pull in common dependencies
-target_link_libraries(imu pico_stdlib hardware_i2c)
+target_link_libraries(accelerometer pico_stdlib hardware_i2c)
 
 # direct serial output to USB rather than UART
-pico_enable_stdio_usb(imu 1)
-pico_enable_stdio_uart(imu 0)
+pico_enable_stdio_usb(accelerometer 1)
+pico_enable_stdio_uart(accelerometer 0)
 
 # create map/bin/hex file etc.
-pico_add_extra_outputs(imu)
+pico_add_extra_outputs(accelerometer)
+
+# Gyroscope
+add_executable(gyroscope
+    gyroscope_main.cpp
+    gyroscope.cpp
+)
+
+# pull in common dependencies
+target_link_libraries(gyroscope pico_stdlib hardware_i2c)
+
+# direct serial output to USB rather than UART
+pico_enable_stdio_usb(gyroscope 1)
+pico_enable_stdio_uart(gyroscope 0)
+
+# create map/bin/hex file etc.
+pico_add_extra_outputs(gyroscope)

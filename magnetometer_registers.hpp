@@ -1,13 +1,13 @@
 #ifndef MAGNETOMETER_REGISTERS_HPP_
 #define MAGNETOMETER_REGISTERS_HPP_
 
-// Either "#define i2c i2c0" or "#define i2c i2c1"
 #include "hardware/i2c.h"
+// Either "#define i2c i2c0" or "#define i2c i2c1"
 #define i2c i2c0
 
 #include <cstdint>
 
-// These are registers for this sensor: https://www.st.com/resource/en/datasheet/lis3mdl.pdf#page=23
+// These are registers for this sensor: https://static6.arrow.com/aropdfconversion/f9ad5c179246e249ff37c559fb5d8256906c7d18/41221071172139648dm00075867.pdf
 
 constexpr std::uint8_t MAG_DEVICE_ADDRESS = 0x1C;
 constexpr std::uint8_t MAG_WHO_AM_I = 0x0F;
