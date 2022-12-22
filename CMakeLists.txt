@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 # initialize pico-sdk from submodule
 # MUST come before project()
 include(pico-sdk/pico_sdk_init.cmake)
-include_directories(includes minmea magnetometer accelerometer-gyroscope accelerometer-gyroscope/accelerometer accelerometer-gyroscope/gyroscope gps)
+include_directories(data-types minmea magnetometer accelerometer-gyroscope accelerometer-gyroscope/accelerometer accelerometer-gyroscope/gyroscope gps)
 
 project(sensor_reading
     VERSION 0.1.0
