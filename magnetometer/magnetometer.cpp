@@ -31,8 +31,9 @@ void Magnetometer::init () {
 	gpio_set_function(0, GPIO_FUNC_I2C);
     gpio_set_function(1, GPIO_FUNC_I2C);
 
-	// Write to register to pull out of sleep mode
 	std::uint8_t data[2];
+
+	// Write to register to pull out of sleep mode
 	data[0] = MAG_CTRL_REG3;
 	// Highest two bits are each 0 by requirement
 	// LP (Low-Power Mode) is 0 by default
@@ -40,6 +41,16 @@ void Magnetometer::init () {
 	// SIM set to 0 for 4-wire SPI
 	// MD[1:0] set to 00 for continuous-conversion mode (this is what pulls the magnetometer out of sleep mode)
 	data[1] = 0b00000000;
+
+	i2c_write_blocking(i2c, MAG_DEVICE_ADDRESS, data, 2, true);
+	
+	data[0] = MAG_CTRL_REG1;
+	// TEMP_EN (Enable Temp Sensor) is 0
+	// OM[1:0] set to 00 for low power mode (1000 Hz once FAST_ODR set to 1)
+	// DO[2:0] set to 000 (not relevant here)
+	// FAST_ODR set to 1 (data rate higher than 80 Hz enabled)
+	// ST (self-test) set to 0 for disabled
+	data[1] = 0b00000010;
 
 	i2c_write_blocking(i2c, MAG_DEVICE_ADDRESS, data, 2, true);
 }

@@ -6,22 +6,29 @@
 
 int main() {
     stdio_init_all();
-    
-    int res = 0;
 
     Accelerometer accel = Accelerometer();
-    fixed_pt_num outputs[3] = {0};
+    int16_t outputs[3] = {0};
+    int x = 0;
+    int y = 0;
+    int z = 0;
+    int n = 0;
+    int n_data_points = 0;
 
     accel.init();
 
-    uint64_t current_time = 0;
-
     while (true) {
         accel.read(outputs);
-        std::cout << "X: " << std::setw(5) << outputs[0] << "  Y: " << std::setw(5) << outputs[1] << "  Z: " << std::setw(5) << outputs[2] << std::endl;
-    }
+        n_data_points++;
+        if (n_data_points > 100) {
+            n++;
+            x += outputs[0];
+            y += outputs[1];
+            z += outputs[2];
 
-    res = 0;
+            std::cout << "X: " << std::setw(12) << x / n << "  Y: " << std::setw(12) << y / n << "  Z: " << std::setw(12) << z / n - 16393 << std::endl;
+        }
+    }
 
     return 0;
 }

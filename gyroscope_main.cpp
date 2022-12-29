@@ -8,13 +8,26 @@ int main() {
     stdio_init_all();
 
     Gyroscope gyro = Gyroscope();
-    fixed_pt_num outputs[3] = {0};
+    int16_t outputs[3] = {0};
+    int x = 0;
+    int y = 0;
+    int z = 0;
+    int n = 0;
+    int n_data_points = 0;
 
     gyro.init();
 
     while (true) {
         gyro.read(outputs);
-        std::cout << "X: " << std::setw(5) << outputs[0] << "  Y: " << std::setw(5) << outputs[1] << "  Z: " << std::setw(5) << outputs[2] << std::endl;
+        n_data_points++;
+        if (n_data_points > 100) {
+            n++;
+            x += outputs[0];
+            y += outputs[1];
+            z += outputs[2];
+
+            std::cout << "X: " << std::setw(12) << x / n << "  Y: " << std::setw(12) << y / n << "  Z: " << std::setw(12) << z / n << std::endl;
+        }
     }
 
     return 0;

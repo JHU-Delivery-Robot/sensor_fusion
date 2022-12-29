@@ -13,7 +13,7 @@ int main() {
 
     while (true) {
         mag.read(outputs);
-        std::cout << "X: " << std::setw(5) << outputs[0] << "  Y: " << std::setw(5) << outputs[1] << "  Z: " << std::setw(5) << outputs[2] << std::endl;
+        std::cout << "X: " << std::setw(12) << outputs[0] << "  Y: " << std::setw(12) << outputs[1] << "  Z: " << std::setw(12) << outputs[2] << std::endl;
     }
 
     return 0;

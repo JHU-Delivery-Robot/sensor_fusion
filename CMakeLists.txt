@@ -16,6 +16,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # initialize the Raspberry Pi Pico SDK
 pico_sdk_init()
 
+add_subdirectory("Fusion")
+
 # GPS test
 add_executable(gps
     gps_main.cpp
@@ -40,7 +42,7 @@ add_executable(magnetometer
 )
 
 # pull in common dependencies
-target_link_libraries(magnetometer pico_stdlib hardware_i2c)
+target_link_libraries(magnetometer pico_stdlib hardware_i2c Fusion)
 
 # direct serial output to USB rather than UART
 pico_enable_stdio_usb(magnetometer 1)
