@@ -19,66 +19,66 @@ pico_sdk_init()
 add_subdirectory("Fusion")
 
 # GPS test
-add_executable(gps
-    gps_main.cpp
+add_executable(gps_test
+    gps_test.cpp
     gps/gps.cpp
     minmea/minmea.c
 )
 
 # pull in common dependencies
-target_link_libraries(gps pico_stdlib hardware_uart)
+target_link_libraries(gps_test pico_stdlib hardware_uart)
 
 # direct serial output to USB rather than UART
-pico_enable_stdio_usb(gps 1)
-pico_enable_stdio_uart(gps 0)
+pico_enable_stdio_usb(gps_test 1)
+pico_enable_stdio_uart(gps_test 0)
 
 # create map/bin/hex file etc.
-pico_add_extra_outputs(gps)
+pico_add_extra_outputs(gps_test)
 
 # Magnetometer
-add_executable(magnetometer
-    magnetometer_main.cpp
+add_executable(magnetometer_test
+    magnetometer_test.cpp
     magnetometer/magnetometer.cpp
 )
 
 # pull in common dependencies
-target_link_libraries(magnetometer pico_stdlib hardware_i2c Fusion)
+target_link_libraries(magnetometer_test pico_stdlib hardware_i2c Fusion)
 
 # direct serial output to USB rather than UART
-pico_enable_stdio_usb(magnetometer 1)
-pico_enable_stdio_uart(magnetometer 0)
+pico_enable_stdio_usb(magnetometer_test 1)
+pico_enable_stdio_uart(magnetometer_test 0)
 
 # create map/bin/hex file etc.
-pico_add_extra_outputs(magnetometer)
+pico_add_extra_outputs(magnetometer_test)
 
 # Accelerometer
-add_executable(accelerometer
-    accelerometer_main.cpp
+add_executable(accelerometer_offsets
+accelerometer_offsets.cpp
     accelerometer-gyroscope/accelerometer/accelerometer.cpp
 )
 
 # pull in common dependencies
-target_link_libraries(accelerometer pico_stdlib hardware_i2c)
+target_link_libraries(accelerometer_offsets pico_stdlib hardware_i2c)
 
 # direct serial output to USB rather than UART
-pico_enable_stdio_usb(accelerometer 1)
-pico_enable_stdio_uart(accelerometer 0)
+pico_enable_stdio_usb(accelerometer_offsets 1)
+pico_enable_stdio_uart(accelerometer_offsets 0)
 
 # create map/bin/hex file etc.
-pico_add_extra_outputs(accelerometer)
+pico_add_extra_outputs(accelerometer_offsets)
 
 # Gyroscope
-add_executable(gyroscope
-    gyroscope_main.cpp
+add_executable(gyroscope_offsets
+gyroscope_offsets.cpp
     accelerometer-gyroscope/gyroscope/gyroscope.cpp
 )
 
 # pull in common dependencies
-target_link_libraries(gyroscope pico_stdlib hardware_i2c)
+target_link_libraries(gyroscope_offsets pico_stdlib hardware_i2c)
 
 # direct serial output to USB rather than UART
-pico_enable_stdio_usb(gyroscope 1)
-pico_enable_stdio_uart(gyroscope 0)
+pico_enable_stdio_usb(gyroscope_offsets 1)
+pico_enable_stdio_uart(gyroscope_offsets 0)
 
 # create map/bin/hex file etc.
-pico_add_extra_outputs(gyroscope)
+pico_add_extra_outputs(gyroscope_offsets)
