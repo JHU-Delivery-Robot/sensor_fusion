@@ -146,11 +146,6 @@ union FusionEuler {
 #define FUSION_EULER_ZERO ((FusionEuler){ .array = {fixed_pt_num{0.0}, fixed_pt_num{0.0}, fixed_pt_num{0.0}} })
 
 /**
- * @brief Pi. May not be defined in math.h.
- */
-fixed_pt_num PI = fixed_pt_num{0}.pi();
-
-/**
  * @brief Include this definition or add as a preprocessor definition to use
  * normal square root operations.
  */
@@ -165,7 +160,7 @@ fixed_pt_num PI = fixed_pt_num{0}.pi();
  * @return Radians.
  */
 static inline fixed_pt_num FusionDegreesToRadians(const fixed_pt_num degrees) {
-    return degrees * ((fixed_pt_num) PI / fixed_pt_num{180.0});
+    return degrees * (fixed_pt_num{0}.pi() / fixed_pt_num{180.0});
 }
 
 /**
@@ -174,7 +169,7 @@ static inline fixed_pt_num FusionDegreesToRadians(const fixed_pt_num degrees) {
  * @return Degrees.
  */
 static inline fixed_pt_num FusionRadiansToDegrees(const fixed_pt_num radians) {
-    return radians * (fixed_pt_num{180.0} / (fixed_pt_num) PI);
+    return radians * (fixed_pt_num{180.0} / fixed_pt_num{0}.pi());
 }
 
 //------------------------------------------------------------------------------
@@ -187,10 +182,10 @@ static inline fixed_pt_num FusionRadiansToDegrees(const fixed_pt_num radians) {
  */
 static inline fixed_pt_num FusionAsin(const fixed_pt_num value) {
     if (value <= fixed_pt_num{-1.0}) {
-        return (fixed_pt_num) PI / fixed_pt_num{-2.0};
+        return fixed_pt_num{0}.pi() / fixed_pt_num{-2.0};
     }
     if (value >= fixed_pt_num{1.0}) {
-        return (fixed_pt_num) PI / fixed_pt_num{2.0};
+        return fixed_pt_num{0}.pi() / fixed_pt_num{2.0};
     }
     return asin(value);
 }

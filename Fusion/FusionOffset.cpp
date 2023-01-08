@@ -38,7 +38,7 @@ fixed_pt_num THRESHOLD {3.0};
  * @param sampleRate Sample rate in Hz.
  */
 void FusionOffsetInitialise(FusionOffset *const offset, const unsigned int sampleRate) {
-    offset->filterCoefficient = fixed_pt_num{2.0} * (fixed_pt_num) PI * CUTOFF_FREQUENCY * (fixed_pt_num{1.0} / (fixed_pt_num) sampleRate);
+    offset->filterCoefficient = fixed_pt_num{2.0} * fixed_pt_num{0}.pi() * CUTOFF_FREQUENCY * (fixed_pt_num{1.0} / (fixed_pt_num) sampleRate);
     offset->timeout = TIMEOUT * sampleRate;
     offset->timer = 0;
     offset->gyroscopeOffset = FUSION_VECTOR_ZERO;

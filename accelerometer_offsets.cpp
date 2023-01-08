@@ -5,6 +5,14 @@
 #include "pico/stdlib.h"
 
 int main() {
+	// Initialize i2c on whichever core is set in "magnetometer_registers.hpp"
+	i2c_init(i2c, 100000);
+
+    gpio_pull_up(0);
+    gpio_pull_up(1);
+	gpio_set_function(0, GPIO_FUNC_I2C);
+    gpio_set_function(1, GPIO_FUNC_I2C);
+    
     stdio_init_all();
 
     Accelerometer accel = Accelerometer();
