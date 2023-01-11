@@ -5,18 +5,18 @@
  * north using accelerometer and magnetometer measurements.
  */
 
-#ifndef FUSION_COMPASS_HPP
-#define FUSION_COMPASS_HPP
+#ifndef FUSION_COMPASS_H
+#define FUSION_COMPASS_H
 
 //------------------------------------------------------------------------------
 // Includes
 
-#include "FusionMath.hpp"
+#include "FusionMath.h"
 
 //------------------------------------------------------------------------------
 // Function declarations
 
-fixed_pt_num FusionCompassCalculateHeading(const FusionVector accelerometer, const FusionVector magnetometer);
+float FusionCompassCalculateHeading(const FusionVector accelerometer, const FusionVector magnetometer);
 
 #endif
 

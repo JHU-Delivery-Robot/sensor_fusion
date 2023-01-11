@@ -5,18 +5,26 @@
  * needs to be included when using the library.
  */
 
-#ifndef FUSION_HPP
-#define FUSION_HPP
+#ifndef FUSION_H
+#define FUSION_H
 
 //------------------------------------------------------------------------------
 // Includes
 
-#include "FusionAhrs.hpp"
-#include "FusionAxes.hpp"
-#include "FusionCalibration.hpp"
-#include "FusionCompass.hpp"
-#include "FusionMath.hpp"
-#include "FusionOffset.hpp"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "FusionAhrs.h"
+#include "FusionAxes.h"
+#include "FusionCalibration.h"
+#include "FusionCompass.h"
+#include "FusionMath.h"
+#include "FusionOffset.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 //------------------------------------------------------------------------------

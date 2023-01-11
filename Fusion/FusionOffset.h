@@ -5,13 +5,13 @@
  * gyroscope offset.
  */
 
-#ifndef FUSION_OFFSET_HPP
-#define FUSION_OFFSET_HPP
+#ifndef FUSION_OFFSET_H
+#define FUSION_OFFSET_H
 
 //------------------------------------------------------------------------------
 // Includes
 
-#include "FusionMath.hpp"
+#include "FusionMath.h"
 
 //------------------------------------------------------------------------------
 // Definitions
@@ -21,7 +21,7 @@
  * internally and must not be accessed by the application.
  */
 typedef struct {
-    fixed_pt_num filterCoefficient;
+    float filterCoefficient;
     unsigned int timeout;
     unsigned int timer;
     FusionVector gyroscopeOffset;

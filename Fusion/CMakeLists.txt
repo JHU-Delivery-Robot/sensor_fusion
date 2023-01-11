@@ -1,4 +1,4 @@
-file(GLOB_RECURSE files "*.cpp")
+file(GLOB_RECURSE files "*.c")
 
 add_library(Fusion ${files})
 

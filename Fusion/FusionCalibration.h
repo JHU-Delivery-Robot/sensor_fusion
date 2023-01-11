@@ -4,13 +4,13 @@
  * @brief Gyroscope, accelerometer, and magnetometer calibration models.
  */
 
-#ifndef FUSION_CALIBRATION_HPP
-#define FUSION_CALIBRATION_HPP
+#ifndef FUSION_CALIBRATION_H
+#define FUSION_CALIBRATION_H
 
 //------------------------------------------------------------------------------
 // Includes
 
-#include "FusionMath.hpp"
+#include "FusionMath.h"
 
 //------------------------------------------------------------------------------
 // Inline functions

@@ -4,16 +4,13 @@
  * @brief Math library.
  */
 
-#ifndef FUSION_MATH_HPP
-#define FUSION_MATH_HPP
+#ifndef FUSION_MATH_H
+#define FUSION_MATH_H
 
 //------------------------------------------------------------------------------
 // Includes
 
-#include <data_types.hpp>
-using fpm::sqrt;
-using fpm::atan2;
-using fpm::asin;
+#include <math.h> // M_PI, sqrtf, atan2f, asinf
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -23,127 +20,95 @@ using fpm::asin;
 /**
  * @brief 3D vector.
  */
-union FusionVector {
-    fixed_pt_num array[3];
+typedef union {
+    float array[3];
 
     struct {
-        fixed_pt_num x;
-        fixed_pt_num y;
-        fixed_pt_num z;
+        float x;
+        float y;
+        float z;
     } axis;
-
-    FusionVector& operator=(const FusionVector& other) {
-        array[0] = other.array[0];
-        array[1] = other.array[1];
-        array[2] = other.array[2];
-        axis = other.axis;
-        return *this;
-    }
-};
+} FusionVector;
 
 /**
  * @brief Quaternion.
  */
-union FusionQuaternion {
-    fixed_pt_num array[4];
+typedef union {
+    float array[4];
 
     struct {
-        fixed_pt_num w;
-        fixed_pt_num x;
-        fixed_pt_num y;
-        fixed_pt_num z;
+        float w;
+        float x;
+        float y;
+        float z;
     } element;
-
-    FusionQuaternion& operator=(const FusionQuaternion& other) {
-        array[0] = other.array[0];
-        array[1] = other.array[1];
-        array[2] = other.array[2];
-        array[4] = other.array[4];
-        element = other.element;
-        return *this;
-    }
-};
+} FusionQuaternion;
 
 /**
  * @brief 3x3 matrix in row-major order.
  * See http://en.wikipedia.org/wiki/Row-major_order
  */
-union FusionMatrix {
-    fixed_pt_num array[3][3];
+typedef union {
+    float array[3][3];
 
     struct {
-        fixed_pt_num xx;
-        fixed_pt_num xy;
-        fixed_pt_num xz;
-        fixed_pt_num yx;
-        fixed_pt_num yy;
-        fixed_pt_num yz;
-        fixed_pt_num zx;
-        fixed_pt_num zy;
-        fixed_pt_num zz;
+        float xx;
+        float xy;
+        float xz;
+        float yx;
+        float yy;
+        float yz;
+        float zx;
+        float zy;
+        float zz;
     } element;
-
-    FusionMatrix& operator=(const FusionMatrix& other) {
-        array[0][0] = other.array[0][0];
-        array[0][1] = other.array[0][1];
-        array[0][2] = other.array[0][2];
-        array[1][0] = other.array[1][0];
-        array[1][1] = other.array[1][1];
-        array[1][2] = other.array[1][2];
-        array[2][0] = other.array[2][0];
-        array[2][1] = other.array[2][1];
-        array[2][2] = other.array[2][2];
-        element = other.element;
-        return *this;
-    }
-};
+} FusionMatrix;
 
 /**
  * @brief Euler angles.  Roll, pitch, and yaw correspond to rotations around
  * X, Y, and Z respectively.
  */
-union FusionEuler {
-    fixed_pt_num array[3];
+typedef union {
+    float array[3];
 
     struct {
-        fixed_pt_num roll;
-        fixed_pt_num pitch;
-        fixed_pt_num yaw;
+        float roll;
+        float pitch;
+        float yaw;
     } angle;
-
-    FusionEuler& operator=(const FusionEuler& other) {
-        array[0] = other.array[0];
-        array[1] = other.array[1];
-        array[2] = other.array[2];
-        angle = other.angle;
-        return *this;
-    }
-};
+} FusionEuler;
 
 /**
  * @brief Vector of zeros.
  */
-#define FUSION_VECTOR_ZERO ((FusionVector){ .array = {fixed_pt_num{0.0}, fixed_pt_num{0.0}, fixed_pt_num{0.0}} })
+#define FUSION_VECTOR_ZERO ((FusionVector){ .array = {0.0f, 0.0f, 0.0f} })
 
 /**
  * @brief Vector of ones.
  */
-#define FUSION_VECTOR_ONES ((FusionVector){ .array = {fixed_pt_num{1.0}, fixed_pt_num{1.0}, fixed_pt_num{1.0}} })
+#define FUSION_VECTOR_ONES ((FusionVector){ .array = {1.0f, 1.0f, 1.0f} })
 
 /**
  * @brief Identity quaternion.
  */
-#define FUSION_IDENTITY_QUATERNION ((FusionQuaternion){ .array = {fixed_pt_num{1.0}, fixed_pt_num{0.0}, fixed_pt_num{0.0}, fixed_pt_num{0.0}} })
+#define FUSION_IDENTITY_QUATERNION ((FusionQuaternion){ .array = {1.0f, 0.0f, 0.0f, 0.0f} })
 
 /**
  * @brief Identity matrix.
  */
-#define FUSION_IDENTITY_MATRIX ((FusionMatrix){ .array = {{fixed_pt_num{1.0}, fixed_pt_num{0.0}, fixed_pt_num{0.0}}, {fixed_pt_num{0.0}, fixed_pt_num{1.0}, fixed_pt_num{0.0}}, {fixed_pt_num{0.0}, fixed_pt_num{0.0}, fixed_pt_num{1.0}}} })
+#define FUSION_IDENTITY_MATRIX ((FusionMatrix){ .array = {{1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}} })
 
 /**
  * @brief Euler angles of zero.
  */
-#define FUSION_EULER_ZERO ((FusionEuler){ .array = {fixed_pt_num{0.0}, fixed_pt_num{0.0}, fixed_pt_num{0.0}} })
+#define FUSION_EULER_ZERO ((FusionEuler){ .array = {0.0f, 0.0f, 0.0f} })
+
+/**
+ * @brief Pi. May not be defined in math.h.
+ */
+#ifndef M_PI
+#define M_PI (3.14159265358979323846)
+#endif
 
 /**
  * @brief Include this definition or add as a preprocessor definition to use
@@ -159,8 +124,8 @@ union FusionEuler {
  * @param degrees Degrees.
  * @return Radians.
  */
-static inline fixed_pt_num FusionDegreesToRadians(const fixed_pt_num degrees) {
-    return degrees * (fixed_pt_num{0}.pi() / fixed_pt_num{180.0});
+static inline float FusionDegreesToRadians(const float degrees) {
+    return degrees * ((float) M_PI / 180.0f);
 }
 
 /**
@@ -168,8 +133,8 @@ static inline fixed_pt_num FusionDegreesToRadians(const fixed_pt_num degrees) {
  * @param radians Radians.
  * @return Degrees.
  */
-static inline fixed_pt_num FusionRadiansToDegrees(const fixed_pt_num radians) {
-    return radians * (fixed_pt_num{180.0} / fixed_pt_num{0}.pi());
+static inline float FusionRadiansToDegrees(const float radians) {
+    return radians * (180.0f / (float) M_PI);
 }
 
 //------------------------------------------------------------------------------
@@ -180,14 +145,14 @@ static inline fixed_pt_num FusionRadiansToDegrees(const fixed_pt_num radians) {
  * @param value Value.
  * @return Arc sine of the value.
  */
-static inline fixed_pt_num FusionAsin(const fixed_pt_num value) {
-    if (value <= fixed_pt_num{-1.0}) {
-        return fixed_pt_num{0}.pi() / fixed_pt_num{-2.0};
+static inline float FusionAsin(const float value) {
+    if (value <= -1.0f) {
+        return (float) M_PI / -2.0f;
     }
-    if (value >= fixed_pt_num{1.0}) {
-        return fixed_pt_num{0}.pi() / fixed_pt_num{2.0};
+    if (value >= 1.0f) {
+        return (float) M_PI / 2.0f;
     }
-    return asin(value);
+    return asinf(value);
 }
 
 //------------------------------------------------------------------------------
@@ -201,16 +166,16 @@ static inline fixed_pt_num FusionAsin(const fixed_pt_num value) {
  * @param x Operand.
  * @return Reciprocal of the square root of x.
  */
-static inline fixed_pt_num FusionFastInverseSqrt(const fixed_pt_num x) {
+static inline float FusionFastInverseSqrt(const float x) {
 
     typedef union {
-        fixed_pt_num f;
+        float f;
         int32_t i;
     } Union32;
 
     Union32 union32 = {.f = x};
     union32.i = 0x5F1F1412 - (union32.i >> 1);
-    return union32.f * (fixed_pt_num{1.69000231} - fixed_pt_num{0.714158168} * x * union32.f * union32.f);
+    return union32.f * (1.69000231f - 0.714158168f * x * union32.f * union32.f);
 }
 
 #endif
@@ -224,7 +189,7 @@ static inline fixed_pt_num FusionFastInverseSqrt(const fixed_pt_num x) {
  * @return True if the vector is zero.
  */
 static inline bool FusionVectorIsZero(const FusionVector vector) {
-    return (vector.axis.x == fixed_pt_num{0.0}) && (vector.axis.y == fixed_pt_num{0.0}) && (vector.axis.z == fixed_pt_num{0.0});
+    return (vector.axis.x == 0.0f) && (vector.axis.y == 0.0f) && (vector.axis.z == 0.0f);
 }
 
 /**
@@ -260,7 +225,7 @@ static inline FusionVector FusionVectorSubtract(const FusionVector vectorA, cons
  * @param vector Vector.
  * @return Sum of the elements.
  */
-static inline fixed_pt_num FusionVectorSum(const FusionVector vector) {
+static inline float FusionVectorSum(const FusionVector vector) {
     return vector.axis.x + vector.axis.y + vector.axis.z;
 }
 
@@ -270,7 +235,7 @@ static inline fixed_pt_num FusionVectorSum(const FusionVector vector) {
  * @param scalar Scalar.
  * @return Multiplication of a vector by a scalar.
  */
-static inline FusionVector FusionVectorMultiplyScalar(const FusionVector vector, const fixed_pt_num scalar) {
+static inline FusionVector FusionVectorMultiplyScalar(const FusionVector vector, const float scalar) {
     FusionVector result;
     result.axis.x = vector.axis.x * scalar;
     result.axis.y = vector.axis.y * scalar;
@@ -315,7 +280,7 @@ static inline FusionVector FusionVectorCrossProduct(const FusionVector vectorA, 
  * @param vector Vector.
  * @return Vector magnitude squared.
  */
-static inline fixed_pt_num FusionVectorMagnitudeSquared(const FusionVector vector) {
+static inline float FusionVectorMagnitudeSquared(const FusionVector vector) {
     return FusionVectorSum(FusionVectorHadamardProduct(vector, vector));
 }
 
@@ -324,8 +289,8 @@ static inline fixed_pt_num FusionVectorMagnitudeSquared(const FusionVector vecto
  * @param vector Vector.
  * @return Vector magnitude.
  */
-static inline fixed_pt_num FusionVectorMagnitude(const FusionVector vector) {
-    return sqrt(FusionVectorMagnitudeSquared(vector));
+static inline float FusionVectorMagnitude(const FusionVector vector) {
+    return sqrtf(FusionVectorMagnitudeSquared(vector));
 }
 
 /**
@@ -335,9 +300,9 @@ static inline fixed_pt_num FusionVectorMagnitude(const FusionVector vector) {
  */
 static inline FusionVector FusionVectorNormalise(const FusionVector vector) {
 #ifdef FUSION_USE_NORMAL_SQRT
-    const fixed_pt_num magnitudeReciprocal = fixed_pt_num{1.0} / sqrt(FusionVectorMagnitudeSquared(vector));
+    const float magnitudeReciprocal = 1.0f / sqrtf(FusionVectorMagnitudeSquared(vector));
 #else
-    const fixed_pt_num magnitudeReciprocal = FusionFastInverseSqrt(FusionVectorMagnitudeSquared(vector));
+    const float magnitudeReciprocal = FusionFastInverseSqrt(FusionVectorMagnitudeSquared(vector));
 #endif
     return FusionVectorMultiplyScalar(vector, magnitudeReciprocal);
 }
@@ -409,9 +374,9 @@ static inline FusionQuaternion FusionQuaternionMultiplyVector(const FusionQuater
 static inline FusionQuaternion FusionQuaternionNormalise(const FusionQuaternion quaternion) {
 #define Q quaternion.element
 #ifdef FUSION_USE_NORMAL_SQRT
-    const fixed_pt_num magnitudeReciprocal = fixed_pt_num{1.0} / sqrt(Q.w * Q.w + Q.x * Q.x + Q.y * Q.y + Q.z * Q.z);
+    const float magnitudeReciprocal = 1.0f / sqrtf(Q.w * Q.w + Q.x * Q.x + Q.y * Q.y + Q.z * Q.z);
 #else
-    const fixed_pt_num magnitudeReciprocal = FusionFastInverseSqrt(Q.w * Q.w + Q.x * Q.x + Q.y * Q.y + Q.z * Q.z);
+    const float magnitudeReciprocal = FusionFastInverseSqrt(Q.w * Q.w + Q.x * Q.x + Q.y * Q.y + Q.z * Q.z);
 #endif
     FusionQuaternion normalisedQuaternion;
     normalisedQuaternion.element.w = Q.w * magnitudeReciprocal;
@@ -451,23 +416,23 @@ static inline FusionVector FusionMatrixMultiplyVector(const FusionMatrix matrix,
  */
 static inline FusionMatrix FusionQuaternionToMatrix(const FusionQuaternion quaternion) {
 #define Q quaternion.element
-    const fixed_pt_num qwqw = Q.w * Q.w; // calculate common terms to avoid repeated operations
-    const fixed_pt_num qwqx = Q.w * Q.x;
-    const fixed_pt_num qwqy = Q.w * Q.y;
-    const fixed_pt_num qwqz = Q.w * Q.z;
-    const fixed_pt_num qxqy = Q.x * Q.y;
-    const fixed_pt_num qxqz = Q.x * Q.z;
-    const fixed_pt_num qyqz = Q.y * Q.z;
+    const float qwqw = Q.w * Q.w; // calculate common terms to avoid repeated operations
+    const float qwqx = Q.w * Q.x;
+    const float qwqy = Q.w * Q.y;
+    const float qwqz = Q.w * Q.z;
+    const float qxqy = Q.x * Q.y;
+    const float qxqz = Q.x * Q.z;
+    const float qyqz = Q.y * Q.z;
     FusionMatrix matrix;
-    matrix.element.xx = fixed_pt_num{2.0} * (qwqw - fixed_pt_num{0.5} + Q.x * Q.x);
-    matrix.element.xy = fixed_pt_num{2.0} * (qxqy - qwqz);
-    matrix.element.xz = fixed_pt_num{2.0} * (qxqz + qwqy);
-    matrix.element.yx = fixed_pt_num{2.0} * (qxqy + qwqz);
-    matrix.element.yy = fixed_pt_num{2.0} * (qwqw - fixed_pt_num{0.5} + Q.y * Q.y);
-    matrix.element.yz = fixed_pt_num{2.0} * (qyqz - qwqx);
-    matrix.element.zx = fixed_pt_num{2.0} * (qxqz - qwqy);
-    matrix.element.zy = fixed_pt_num{2.0} * (qyqz + qwqx);
-    matrix.element.zz = fixed_pt_num{2.0} * (qwqw - fixed_pt_num{0.5} + Q.z * Q.z);
+    matrix.element.xx = 2.0f * (qwqw - 0.5f + Q.x * Q.x);
+    matrix.element.xy = 2.0f * (qxqy - qwqz);
+    matrix.element.xz = 2.0f * (qxqz + qwqy);
+    matrix.element.yx = 2.0f * (qxqy + qwqz);
+    matrix.element.yy = 2.0f * (qwqw - 0.5f + Q.y * Q.y);
+    matrix.element.yz = 2.0f * (qyqz - qwqx);
+    matrix.element.zx = 2.0f * (qxqz - qwqy);
+    matrix.element.zy = 2.0f * (qyqz + qwqx);
+    matrix.element.zz = 2.0f * (qwqw - 0.5f + Q.z * Q.z);
     return matrix;
 #undef Q
 }
@@ -479,11 +444,11 @@ static inline FusionMatrix FusionQuaternionToMatrix(const FusionQuaternion quate
  */
 static inline FusionEuler FusionQuaternionToEuler(const FusionQuaternion quaternion) {
 #define Q quaternion.element
-    const fixed_pt_num halfMinusQySquared = fixed_pt_num{0.5} - Q.y * Q.y; // calculate common terms to avoid repeated operations
+    const float halfMinusQySquared = 0.5f - Q.y * Q.y; // calculate common terms to avoid repeated operations
     FusionEuler euler;
-    euler.angle.roll = FusionRadiansToDegrees(atan2(Q.w * Q.x + Q.y * Q.z, halfMinusQySquared - Q.x * Q.x));
-    euler.angle.pitch = FusionRadiansToDegrees(FusionAsin(fixed_pt_num{2.0} * (Q.w * Q.y - Q.z * Q.x)));
-    euler.angle.yaw = FusionRadiansToDegrees(atan2(Q.w * Q.z + Q.x * Q.y, halfMinusQySquared - Q.z * Q.z));
+    euler.angle.roll = FusionRadiansToDegrees(atan2f(Q.w * Q.x + Q.y * Q.z, halfMinusQySquared - Q.x * Q.x));
+    euler.angle.pitch = FusionRadiansToDegrees(FusionAsin(2.0f * (Q.w * Q.y - Q.z * Q.x)));
+    euler.angle.yaw = FusionRadiansToDegrees(atan2f(Q.w * Q.z + Q.x * Q.y, halfMinusQySquared - Q.z * Q.z));
     return euler;
 #undef Q
 }

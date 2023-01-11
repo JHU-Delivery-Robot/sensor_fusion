@@ -27,11 +27,11 @@ void Gyroscope::init () {
 	// Write to register to pull out of sleep mode
 	std::uint8_t data[2];
 	data[0] = GYRO_CTRL2_G;
-	// ODR_G[3:0] = 1000 => 1.66 kHz
+	// ODR_G[3:0] = 1010 => 6.66 kHz
 	// FS[1:0]_G = 00 => +/- 250 dps
 	// FS_125 = 0 (select angular rate sensitivity through FS[1:0]_G)
 	// last bit = 0 (required)
-	data[1] = 0b10000000;
+	data[1] = 0b10100000;
 
 	i2c_write_blocking(i2c, ACCEL_GYRO_DEVICE_ADDRESS, data, 2, true);
 }

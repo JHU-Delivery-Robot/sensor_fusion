@@ -27,11 +27,11 @@ void Accelerometer::init () {
 	// Write to register to pull out of sleep mode
 	std::uint8_t data[2];
 	data[0] = ACCEL_CTRL1_XL;
-	// ODR_XL[3:0] = 1000 => 1.66 kHz
+	// ODR_XL[3:0] = 1010 => 6.66 kHz
 	// FS[1:0]_XL = 00 => +/- 2g
 	// LPF2_XL_EN = 0 (default)
 	// last bit = 0 (required)
-	data[1] = 0b10000000;
+	data[1] = 0b10100000;
 
 	i2c_write_blocking(i2c, ACCEL_GYRO_DEVICE_ADDRESS, data, 2, true);
 }

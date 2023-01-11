@@ -5,14 +5,14 @@
  * measurements into a single measurement of orientation relative to the Earth.
  */
 
-#ifndef FUSION_AHRS_HPP
-#define FUSION_AHRS_HPP
+#ifndef FUSION_AHRS_H
+#define FUSION_AHRS_H
 
 //------------------------------------------------------------------------------
 // Includes
 
-#include "FusionMath.hpp"
-#include <cstdbool>
+#include "FusionMath.h"
+#include <stdbool.h>
 
 //------------------------------------------------------------------------------
 // Definitions
@@ -21,9 +21,9 @@
  * @brief AHRS algorithm settings.
  */
 typedef struct {
-    fixed_pt_num gain;
-    fixed_pt_num accelerationRejection;
-    fixed_pt_num magneticRejection;
+    float gain;
+    float accelerationRejection;
+    float magneticRejection;
     unsigned int rejectionTimeout;
 } FusionAhrsSettings;
 
@@ -36,8 +36,8 @@ typedef struct {
     FusionQuaternion quaternion;
     FusionVector accelerometer;
     bool initialising;
-    fixed_pt_num rampedGain;
-    fixed_pt_num rampedGainStep;
+    float rampedGain;
+    float rampedGainStep;
     FusionVector halfAccelerometerFeedback;
     FusionVector halfMagnetometerFeedback;
     bool accelerometerIgnored;
@@ -52,12 +52,12 @@ typedef struct {
  * @brief AHRS algorithm internal states.
  */
 typedef struct {
-    fixed_pt_num accelerationError;
+    float accelerationError;
     bool accelerometerIgnored;
-    fixed_pt_num accelerationRejectionTimer;
-    fixed_pt_num magneticError;
+    float accelerationRejectionTimer;
+    float magneticError;
     bool magnetometerIgnored;
-    fixed_pt_num magneticRejectionTimer;
+    float magneticRejectionTimer;
 } FusionAhrsInternalStates;
 
 /**
@@ -80,11 +80,11 @@ void FusionAhrsReset(FusionAhrs *const ahrs);
 
 void FusionAhrsSetSettings(FusionAhrs *const ahrs, const FusionAhrsSettings *const settings);
 
-void FusionAhrsUpdate(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const FusionVector magnetometer, const fixed_pt_num deltaTime);
+void FusionAhrsUpdate(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const FusionVector magnetometer, const float deltaTime);
 
-void FusionAhrsUpdateNoMagnetometer(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const fixed_pt_num deltaTime);
+void FusionAhrsUpdateNoMagnetometer(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const float deltaTime);
 
-void FusionAhrsUpdateExternalHeading(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const fixed_pt_num heading, const fixed_pt_num deltaTime);
+void FusionAhrsUpdateExternalHeading(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const float heading, const float deltaTime);
 
 FusionQuaternion FusionAhrsGetQuaternion(const FusionAhrs *const ahrs);
 
@@ -96,7 +96,7 @@ FusionAhrsInternalStates FusionAhrsGetInternalStates(const FusionAhrs *const ahr
 
 FusionAhrsFlags FusionAhrsGetFlags(FusionAhrs *const ahrs);
 
-void FusionAhrsSetHeading(FusionAhrs *const ahrs, const fixed_pt_num heading);
+void FusionAhrsSetHeading(FusionAhrs *const ahrs, const float heading);
 
 #endif
 
