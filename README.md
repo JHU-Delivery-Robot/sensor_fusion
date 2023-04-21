@@ -17,7 +17,7 @@ git clone --recurse-submodules https://github.com/JHU-Delivery-Robot/sensor-fusi
 ```
 and from inside of `./sensor-fusion/pico-sdk` run `git submodule update --init`.
 
-Next, configure CMake with
+Next, go back into the top level of the git repository (`./`) and configure CMake with
 ```
 mkdir build
 cd build

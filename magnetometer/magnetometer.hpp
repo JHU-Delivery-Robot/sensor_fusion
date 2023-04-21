@@ -8,6 +8,7 @@ class Magnetometer {
 public:
 	Magnetometer();
 	void read (int16_t* outputs);
+	void read_with_conversions (float* outputs);
 	void init ();
 };
 

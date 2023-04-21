@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
 #include "Fusion.h"
 #include "data_types.hpp"
@@ -13,10 +14,10 @@
 
 int main() {
 	// Initialize i2c on whichever core is set in "magnetometer_registers.hpp"
-	i2c_init(i2c, 100000);
+	i2c_init(i2c, 400000);
 
-    gpio_pull_up(0);
-    gpio_pull_up(1);
+    //gpio_pull_up(0);
+    //gpio_pull_up(1);
 	gpio_set_function(0, GPIO_FUNC_I2C);
     gpio_set_function(1, GPIO_FUNC_I2C);
 
@@ -28,7 +29,7 @@ int main() {
 
     Magnetometer mag = Magnetometer();
     mag.init();
-    std::int16_t mag_outputs[3] = {0};
+    float mag_outputs[3] = {0};
 
     Accelerometer accel = Accelerometer();
     accel.init();
@@ -41,8 +42,8 @@ int main() {
     const FusionMatrix accelerometerMisalignment = {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0};
     const FusionVector accelerometerSensitivity = {0.000061, 0.000061, 0.000061};
     const FusionVector accelerometerOffset = {-285, -200, 497};
-    const FusionMatrix softIronMatrix = {0.985, 0.034, 0.007, 0.034, 1.007, 0.008, 0.007, 0.008, 1.009};
-    const FusionVector hardIronOffset = {-16.4, -11.12, -3.26};
+    const FusionMatrix softIronMatrix = {0.996, 0.046, -0.007, 0.046, 1.004, -0.008, -0.007, -0.008, 1.002};
+    const FusionVector hardIronOffset = {-17.81, -7.68, 3.82};
 
     // Initialise algorithms
     FusionOffset offset;
@@ -51,24 +52,15 @@ int main() {
     FusionOffsetInitialise(&offset, SAMPLE_RATE);
     FusionAhrsInitialise(&ahrs);
 
-    
-
     // Set AHRS algorithm settings
     const FusionAhrsSettings settings = {
-            .gain = 0.5,
+            .gain = 5,
             .accelerationRejection = 10.0,
-            .magneticRejection = 20.0,
-            .rejectionTimeout = 0 * SAMPLE_RATE, // 5 seconds
+            .magneticRejection = 10.0,
+            .rejectionTimeout = 10 * SAMPLE_RATE, // 5 seconds
 
     };
     FusionAhrsSetSettings(&ahrs, &settings);
-
-    // FusionAhrsReset(&ahrs);
-
-    // ahrs.quaternion = {0.0f, 0.0f, 0.0f, 1.0f};
-    // ahrs.accelerometer = {0.0f, 0.0f, 0.0f};
-
-    FusionAhrsSetHeading(&ahrs, 0);
 
     absolute_time_t previousTimestamp = get_absolute_time();
     // This loop should repeat each time new gyroscope data is available
@@ -79,7 +71,7 @@ int main() {
         FusionVector gyroscope = {static_cast<float>(gyro_outputs[0]), static_cast<float>(gyro_outputs[1]), static_cast<float>(gyro_outputs[2])};
         accel.read(accel_outputs);
         FusionVector accelerometer = {static_cast<float>(accel_outputs[0]), static_cast<float>(accel_outputs[1]), static_cast<float>(accel_outputs[2])};
-        mag.read(mag_outputs);
+        mag.read_with_conversions(mag_outputs);
         FusionVector magnetometer = {static_cast<float>(mag_outputs[0]), static_cast<float>(mag_outputs[1]), static_cast<float>(mag_outputs[2])};
 
         // Apply calibration
@@ -101,11 +93,9 @@ int main() {
 
         // Print algorithm outputs
         const FusionEuler euler = FusionQuaternionToEuler(FusionAhrsGetQuaternion(&ahrs));
-        const FusionVector earth = FusionAhrsGetEarthAcceleration(&ahrs);
         
         std::cout << euler.angle.yaw << "," << euler.angle.pitch << "," << euler.angle.roll << std::endl;
-        /*std::cout << earth.axis.x << "," << earth.axis.y << "," << earth.axis.z << " -- ";
-        std::cout << gyroscope.axis.x << "," << gyroscope.axis.y << "," << gyroscope.axis.z << " -- ";
+        /* std::cout << gyroscope.axis.x << "," << gyroscope.axis.y << "," << gyroscope.axis.z << " -- ";
         std::cout << accelerometer.axis.x << "," << accelerometer.axis.y << "," << accelerometer.axis.z << " -- ";
         std::cout << magnetometer.axis.x << "," << magnetometer.axis.y << "," << magnetometer.axis.z << " -- ";
         std::cout << deltaTime << "," << static_cast<float>(timestamp) << std::endl;*/
